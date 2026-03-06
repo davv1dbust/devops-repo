@@ -1,0 +1,21 @@
+name: Validar Archivo No Vacío
+
+on: [push, pull_request]
+
+jobs:
+  check-file:
+    runs-on: ubuntu-latest
+steps: 
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Validar que el archivo.txt no esté vacío
+        run: |
+          FILE="index.txt"
+          if [ -s "$FILE" ]; then
+            echo "✅ El archivo $FILE existe y contiene datos."
+          else
+            echo "❌ ERROR: El archivo $FILE está vacío o no existe."
+            exit 1
+          fi
